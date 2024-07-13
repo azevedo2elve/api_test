@@ -59,3 +59,28 @@ describe('validation rules', function () {
         ]);
    });
 });
+
+it('return of the creating cliente', function () {
+    $data = [
+        'nome'     => 'Joe Doe',
+        'telefone' => '51995141997',
+        'email'    => 'joe@doe.com',
+    ];
+
+    $request = postJson(route('clientes.store'), $data)
+        ->assertCreated();
+
+    $cliente = \App\Models\Cliente::latest()->first();
+
+    $request->assertJson([
+        'data' => [
+            'id' => $cliente->id,
+            'nome' => $cliente->nome,
+            'telefone' => $cliente->telefone,
+            'email' => $cliente->email,
+            'created_at' => $cliente->created_at->format('Y-m-d'),
+            'updated_at' => $cliente->updated_at->format('Y-m-d'),
+            ]
+        ]
+    );
+});

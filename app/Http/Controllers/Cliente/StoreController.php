@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cliente\StoreRequest;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 use function Pest\Laravel\postJson;
 
 class StoreController extends Controller
@@ -21,8 +22,17 @@ class StoreController extends Controller
             'email'    => $request->request->get('email'),
         ];
 
-        Cliente::create($data);
+        $cliente = Cliente::create($data);
 
-        return json_encode($data);
+        return response([
+            'data' => [
+                'id'    => $cliente->id,
+                'nome'  => $cliente->nome,
+                'telefone'  => $cliente->telefone,
+                'email'  => $cliente->email,
+                'created_at' => $cliente->created_at->format('Y-m-d'),
+                'updated_at' => $cliente->updated_at->format('Y-m-d'),
+            ]
+        ], Response::HTTP_CREATED);
     }
 }
