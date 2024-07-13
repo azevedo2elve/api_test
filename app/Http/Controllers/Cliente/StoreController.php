@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cliente\StoreRequest;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+use function Pest\Laravel\postJson;
 
 class StoreController extends Controller
 {
@@ -14,10 +15,14 @@ class StoreController extends Controller
      */
     public function __invoke(StoreRequest $request)
     {
-        Cliente::create([
+        $data = [
             'nome'     => $request->request->get('nome'),
             'telefone' => $request->request->get('telefone'),
             'email'    => $request->request->get('email'),
-        ]);
+        ];
+
+        Cliente::create($data);
+
+        return json_encode($data);
     }
 }
