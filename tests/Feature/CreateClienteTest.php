@@ -24,7 +24,7 @@ describe('validation rules', function () {
         ]);
    });
 
-   test('email:email:unique', function (){
+   test('email:email', function (){
       postJson(route('clientes.store'), [
           'email' => 'joedoe.com',
       ])
