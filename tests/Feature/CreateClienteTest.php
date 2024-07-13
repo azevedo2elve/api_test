@@ -14,11 +14,48 @@ it('can create a cliente', function () {
     assertDatabaseHas('clientes', $data);
 });
 
-it('cliente::required', function () {
-    postJson(route('clientes.store'), [])
+describe('validation rules', function () {
+   test('cliente:required', function () {
+       postJson(route('clientes.store'), [])
         ->assertJsonValidationErrors([
             'nome' => 'required',
             'telefone' => 'required',
             'email' => 'required',
         ]);
+   });
+
+   test('email:email:unique', function (){
+      postJson(route('clientes.store'), [
+          'email' => 'joedoe.com',
+      ])
+        ->assertJsonValidationErrors([
+            'email' => 'The email field must be a valid email address.',
+        ]);
+   });
+
+   test('email:unique:clientes', function () {
+      \App\Models\Cliente::factory()->create([
+          'nome' => 'Joe Doe',
+          'email' => 'joe@doe.com',
+          'telefone' => '51995141997',
+      ]);
+
+      postJson(route('clientes.store'), [
+          'nome' => 'Joe Doe',
+          'email' => 'joe@doe.com',
+          'telefone' => '51995141997',
+      ])
+        ->assertJsonValidationErrors([
+            'email' => 'already been taken',
+        ]);
+   });
+
+   test('telefone:min:10', function () {
+      postJson(route('clientes.store'), [
+          'telefone' => '519951',
+      ])
+        ->assertJsonValidationErrors([
+            'telefone' => 'The telefone field must be at least 10 characters.',
+        ]);
+   });
 });
