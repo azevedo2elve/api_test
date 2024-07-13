@@ -13,3 +13,12 @@ it('can create a cliente', function () {
 
     assertDatabaseHas('clientes', $data);
 });
+
+it('cliente::required', function () {
+    postJson(route('clientes.store'), [])
+        ->assertJsonValidationErrors([
+            'nome' => 'required',
+            'telefone' => 'required',
+            'email' => 'required',
+        ]);
+});
