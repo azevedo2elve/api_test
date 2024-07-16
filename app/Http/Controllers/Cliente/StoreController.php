@@ -16,14 +16,11 @@ class StoreController extends Controller
      */
     public function __invoke(StoreRequest $request)
     {
-        $data = [
-            'nome'     => $request->request->get('nome'),
-            'telefone' => $request->request->get('telefone'),
-            'email'    => $request->request->get('email'),
-        ];
+        $data = $request->validated();
 
         $cliente = Cliente::create($data);
 
+        // transformar retorno em resource Resource JsonResource
         return response([
             'data' => [
                 'id'    => $cliente->id,
