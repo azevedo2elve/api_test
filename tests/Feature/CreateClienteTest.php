@@ -72,6 +72,8 @@ it('return of the creating cliente', function () {
 
     $cliente = \App\Models\Cliente::latest()->first();
 
+    // dd($request->json());
+
     $request->assertJson(
         [
             'data' => [
