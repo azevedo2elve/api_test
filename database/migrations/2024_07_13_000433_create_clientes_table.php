@@ -13,7 +13,7 @@ return new class () extends Migration {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->bigInteger('telefone');
+            $table->string('telefone');
             $table->string('email')->unique();
             $table->timestamps();
         });

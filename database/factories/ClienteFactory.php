@@ -16,8 +16,16 @@ class ClienteFactory extends Factory
      */
     public function definition(): array
     {
+//        return [
+//            'nome' => fake()->name(),
+//            'telefone' => fake()->phoneNumber(),
+//            'email' => fake()->unique()->safeEmail(),
+//        ];
+
         return [
-            //
+            'nome' => 'Gabriel Azevedo',
+            'telefone' => '5555555555',
+            'email' => 'gabrielazevedo@gmail.com',
         ];
     }
 }
