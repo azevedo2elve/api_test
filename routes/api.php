@@ -9,4 +9,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::post('/clientes', Cliente\StoreController::class)->name('clientes.store');
+Route::post('/cliente', Cliente\StoreController::class)->name('cliente.store');
