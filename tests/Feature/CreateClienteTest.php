@@ -9,14 +9,14 @@ it('can create a cliente', function () {
         'email'    => 'joe@doe.com',
     ];
 
-    postJson(route('clientes.store'), $data)->assertSuccessful();
+    postJson(route('cliente.store'), $data)->assertSuccessful();
 
     assertDatabaseHas('clientes', $data);
 });
 
 describe('validation rules', function () {
     test('cliente:required', function () {
-        postJson(route('clientes.store'), [])
+        postJson(route('cliente.store'), [])
          ->assertJsonValidationErrors([
              'nome'     => 'required',
              'telefone' => 'required',
@@ -25,7 +25,7 @@ describe('validation rules', function () {
     });
 
     test('email:email', function () {
-        postJson(route('clientes.store'), [
+        postJson(route('cliente.store'), [
             'email' => 'joedoe.com',
         ])
           ->assertJsonValidationErrors([
@@ -33,14 +33,14 @@ describe('validation rules', function () {
           ]);
     });
 
-    test('email:unique:clientes', function () {
+    test('email:unique:cliente', function () {
         \App\Models\Cliente::factory()->create([
             'nome'     => 'Joe Doe',
             'email'    => 'joe@doe.com',
             'telefone' => '51995141997',
         ]);
 
-        postJson(route('clientes.store'), [
+        postJson(route('cliente.store'), [
             'nome'     => 'Joe Doe',
             'email'    => 'joe@doe.com',
             'telefone' => '51995141997',
@@ -51,7 +51,7 @@ describe('validation rules', function () {
     });
 
     test('telefone:min:10', function () {
-        postJson(route('clientes.store'), [
+        postJson(route('cliente.store'), [
             'telefone' => '519951',
         ])
           ->assertJsonValidationErrors([
@@ -67,7 +67,7 @@ it('return of the creating cliente', function () {
         'email'    => 'joe@doe.com',
     ];
 
-    $request = postJson(route('clientes.store'), $data)
+    $request = postJson(route('cliente.store'), $data)
         ->assertCreated();
 
     $cliente = \App\Models\Cliente::latest()->first();
