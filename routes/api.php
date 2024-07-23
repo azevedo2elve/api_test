@@ -10,3 +10,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/cliente', Cliente\StoreController::class)->name('cliente.store');
+
+Route::get('/clientes/listar', Cliente\ListController::class)->name('clientes.list');
