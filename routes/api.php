@@ -12,4 +12,6 @@ Route::post('/cliente', Cliente\StoreController::class)->name('cliente.store');
 
 Route::get('/clientes/listar', Cliente\GetAllClientsController::class)->name('clientes.listAll');
 
-Route::get('/cliente/listar/{id?}', Cliente\GetClientByIdController::class)->name('cliente.listById');
+Route::get('/cliente/listar/{id}', Cliente\GetClientByIdController::class)->name('cliente.listById');
+
+Route::patch('/cliente/atualizar/{id}', Cliente\UpdateClientController::class)->name('cliente.update');
